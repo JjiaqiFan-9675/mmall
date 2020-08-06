@@ -1,17 +1,7 @@
-This is a java-maven project to create an online mall.
+v2.0
+In version 2.0, we update the program in v1.0 to dealt with concurrency
 
-For the framework, I used My-batis generator.
-
-I also used other dependencies, detailed in pom.xml.
-
-In com.mall, there are 7 packages,
-    common: public used package about https
-    controller: to implement front-end and back-end function,
-    service: service to implement function in 'controller'
-    dao: Mappers interface about database operation, detailed in resources-mappers.xml
-    pojo: cases created by my-batis generator.
-    vo: value object, similar to 'pojo'
-    util: some additional functions.
-
-
-
+And we made the following improvement
+    add payService(Alipay) to current program
+    use Lombok: don't need to put declaration and args in constructor and loggers
+    make environmental isolation in maven
