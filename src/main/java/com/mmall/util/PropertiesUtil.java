@@ -3,8 +3,6 @@ package com.mmall.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -40,6 +38,7 @@ public class PropertiesUtil {
         return value.trim();
     }
 
+    // 重载
     public static String getProperty(String key,String defaultValue){
 
         String value = props.getProperty(key.trim());
