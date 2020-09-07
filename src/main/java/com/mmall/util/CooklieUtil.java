@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by jiaqi on 8/28/20.
  */
 @Slf4j
+// Cookie在本地
 public class CooklieUtil {
 
     // 对于以jiaqi.com结尾的二级域名都可获取cookie

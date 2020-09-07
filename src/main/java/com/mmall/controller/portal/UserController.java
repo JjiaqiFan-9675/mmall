@@ -11,6 +11,7 @@ import com.mmall.util.RedisPoolUtil;
 import com.sun.corba.se.spi.activation.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,6 +49,8 @@ public class UserController {
         ServerResponse<User> response = iUserService.login(username,password);
         if(response.isSuccess()){
             //session.setAttribute(Const.CURRENT_USER,response.getData());
+
+            // 将产生的session写进response的本地cookie中， 并写进连接池
             CooklieUtil.writeLoginToken(httpServletResponse, session.getId());
             RedisPoolUtil.setEx(session.getId(), JsonUtil.obj2String(response.getData()), Const.RedisCacheExtime.REDIS_SESSION_EXTION);
 
@@ -57,8 +60,13 @@ public class UserController {
 
     @RequestMapping(value = "logout.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> logout(HttpSession session){
-        session.removeAttribute(Const.CURRENT_USER);
+    public ServerResponse<String> logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        //session.removeAttribute(Const.CURRENT_USER);
+
+        String loginToken = CooklieUtil.readLoginToken(httpServletRequest);
+        CooklieUtil.delLoginToken(httpServletRequest,httpServletResponse);
+        RedisPoolUtil.del(loginToken);
+
         return ServerResponse.createBySuccess();
     }
 
@@ -78,8 +86,19 @@ public class UserController {
 
     @RequestMapping(value = "get_user_info.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> getUserInfo(HttpSession session){
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<User> getUserInfo(HttpServletRequest httpServletRequest){
+        //User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        //从本地Cookie获取mmall的login_token
+        String loginToken = CooklieUtil.readLoginToken(httpServletRequest);
+        if(StringUtils.isEmpty(loginToken)){
+            ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
+        }
+
+        //从redis连接池内获取login_token信息
+        String userJsonStr = RedisPoolUtil.get(loginToken);
+        User user = JsonUtil.string2Obj(userJsonStr, User.class);
+
         if(user != null){
             return ServerResponse.createBySuccess(user);
         }
