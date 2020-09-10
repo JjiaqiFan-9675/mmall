@@ -14,8 +14,8 @@ public class Const {
     public static final String EMAIL = "email";
     public static final String USERNAME = "username";
 
-    public interface  RedisCacheExtime{
-        int REDIS_SESSION_EXTION = 60 * 30; // 30 minutes
+    public interface RedisCacheExtime{
+        int REDIS_SESSION_EXTIME = 60 * 30; // 30 minutes
     }
 
     public interface ProductListOrderBy{

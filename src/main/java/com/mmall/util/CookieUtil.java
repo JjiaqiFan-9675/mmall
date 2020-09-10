@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 // Cookie在本地
-public class CooklieUtil {
+public class CookieUtil {
 
     // 对于以jiaqi.com结尾的二级域名都可获取cookie
     private final static String COOKIE_DOMAIN = ".jiaqi.com";

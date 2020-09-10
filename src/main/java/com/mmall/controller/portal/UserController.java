@@ -5,10 +5,9 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
-import com.mmall.util.CooklieUtil;
+import com.mmall.util.CookieUtil;
 import com.mmall.util.JsonUtil;
 import com.mmall.util.RedisPoolUtil;
-import com.sun.corba.se.spi.activation.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -51,8 +50,8 @@ public class UserController {
             //session.setAttribute(Const.CURRENT_USER,response.getData());
 
             // 将产生的session写进response的本地cookie中， 并写进连接池
-            CooklieUtil.writeLoginToken(httpServletResponse, session.getId());
-            RedisPoolUtil.setEx(session.getId(), JsonUtil.obj2String(response.getData()), Const.RedisCacheExtime.REDIS_SESSION_EXTION);
+            CookieUtil.writeLoginToken(httpServletResponse, session.getId());
+            RedisPoolUtil.setEx(session.getId(), JsonUtil.obj2String(response.getData()), Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
 
         }
         return response;
@@ -63,8 +62,8 @@ public class UserController {
     public ServerResponse<String> logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         //session.removeAttribute(Const.CURRENT_USER);
 
-        String loginToken = CooklieUtil.readLoginToken(httpServletRequest);
-        CooklieUtil.delLoginToken(httpServletRequest,httpServletResponse);
+        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
+        CookieUtil.delLoginToken(httpServletRequest,httpServletResponse);
         RedisPoolUtil.del(loginToken);
 
         return ServerResponse.createBySuccess();
@@ -90,7 +89,7 @@ public class UserController {
         //User user = (User) session.getAttribute(Const.CURRENT_USER);
 
         //从本地Cookie获取mmall的login_token
-        String loginToken = CooklieUtil.readLoginToken(httpServletRequest);
+        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         if(StringUtils.isEmpty(loginToken)){
             ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
         }
