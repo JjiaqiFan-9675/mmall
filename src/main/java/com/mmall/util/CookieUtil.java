@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by jiaqi on 8/28/20.
+ * Cookie是把用户的数据写给用户的浏览器。
+ * 服务器可以为每个用户浏览器创建一个会话对象（session对象)
+ * token = session.get(id)
+ * 把token&name，以cookie的形式回写给客户机
  */
 @Slf4j
 // Cookie在本地

@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 
 /**
  * Created by jiaqi on 7/18/20.
- * Information of current login user
+ *  常量类
  */
 
 
@@ -13,6 +13,7 @@ public class Const {
 
     public static final String EMAIL = "email";
     public static final String USERNAME = "username";
+    public static final String TOKEN_PREFIX = "token_";
 
     public interface RedisCacheExtime{
         int REDIS_SESSION_EXTIME = 60 * 30; // 30 minutes

@@ -18,6 +18,8 @@ import java.io.IOException;
 
 /**
  * Created by jiaqi on 9/9/20.
+ * Before SessionExpireFilter: As user log in, he only has 30 minutes.
+ * After SessionExpireFilter, as the user keep operating his account, he always left 30 minutes.
  */
 public class SessionExpireFilter implements Filter {
     @Override
