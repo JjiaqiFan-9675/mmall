@@ -15,6 +15,11 @@
     <aop:aspectj-autoproxy/>
 
 
+
+
+    <!-- 非侵入式改造项目为单点登录 -->
+    <import resource="applicationContext-spring-session.xml"/>
+
     <import resource="applicationContext-datasource.xml"/>
 
 
