@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CookieUtil {
 
     // 对于以jiaqi.com结尾的二级域名都可获取cookie
+    // 这也意味着不在“jiaqi.com” 域名下不能共享cookie
     private final static String COOKIE_DOMAIN = ".jiaqi.com";
     private final static String COOKIE_NAME = "mmall_login_token";
 

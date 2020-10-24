@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- ApplicationContext.xml  是spring 全局配置文件，用来控制spring 特性的 -->
+<!-- dispatcher-servlet.xml 是spring mvc里面的，控制器、拦截uri转发view -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
@@ -9,13 +11,15 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <context:component-scan base-package="com.mmall" annotation-config="true"/>
+    <!-- 将Controller文件交给Spring MVC配置文件进行扫描 -->
+    <context:component-scan base-package="com.mmall" annotation-config="true">
+            <context:exclude-filter type ="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
+    <!--上面已经设置为true -->
     <!--<context:annotation-config/>-->
+
     <aop:aspectj-autoproxy/>
-
-
-
 
     <!-- 非侵入式改造项目为单点登录 -->
     <import resource="applicationContext-spring-session.xml"/>

@@ -13,6 +13,8 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+//为什么使用接口： 防止Spring session 使user序列化出问题
 public class User implements Serializable {
     private Integer id;
 
